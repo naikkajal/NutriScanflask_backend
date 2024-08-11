@@ -1,0 +1,31 @@
+# Python specific
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# IDE and editor folders
+.vscode/
+.idea/
+*.swp
+
+# Flask specific
+instance/
+*.log
+
+# Operating System specific
+.DS_Store
+Thumbs.db
+
+# Ignore specific directories
+Lib/
+Scripts/
