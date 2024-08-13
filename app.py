@@ -5,13 +5,13 @@ from tensorflow.keras.preprocessing import image
 import os
 from flask_cors import CORS
 
-
 app = Flask(__name__)
+CORS(app)  # Enables CORS for all routes
 
-# Load the model
+# Load the TensorFlow model
 model = tf.keras.models.load_model(r"C:\Users\KAJAL NAIK\Downloads\MobileNet_V2.h5")
 
-# List of class labels
+# Define class labels
 class_labels = ['apple_pie', 'baby_back_ribs', 'baklava', 'beef_carpaccio', 'beef_tartare', 'beet_salad', 
                 'beignets', 'bibimbap', 'bread_pudding', 'breakfast_burrito', 'bruschetta', 'caesar_salad', 
                 'cannoli', 'caprese_salad', 'carrot_cake', 'ceviche', 'cheese_plate', 'cheesecake', 
@@ -32,7 +32,6 @@ class_labels = ['apple_pie', 'baby_back_ribs', 'baklava', 'beef_carpaccio', 'bee
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Print request files keys to debug
     print(request.files.keys())
     
     if 'file' not in request.files:
@@ -40,7 +39,6 @@ def predict():
     
     file = request.files['file']
     
-    # Directory to save the image
     img_dir = os.path.join(os.getcwd(), 'tmp')
     if not os.path.exists(img_dir):
         os.makedirs(img_dir)
@@ -48,7 +46,6 @@ def predict():
     img_path = os.path.join(img_dir, file.filename)
     file.save(img_path)
 
-    # Preprocess the image
     img = image.load_img(img_path, target_size=(224, 224))
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0)
@@ -61,4 +58,4 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
