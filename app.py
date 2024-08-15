@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)  # Enables CORS for all routes
 
 # Load the TensorFlow model
-model = tf.keras.models.load_model(r"C:\Users\KAJAL NAIK\Downloads\MobileNet_V2.h5")
+model = tf.keras.models.load_model("C:\\Users\\KAJAL NAIK\\Downloads\\MobileNet_V2.h5")
 
 # Define class labels
 class_labels = ['apple_pie', 'baby_back_ribs', 'baklava', 'beef_carpaccio', 'beef_tartare', 'beet_salad', 
@@ -30,10 +30,15 @@ class_labels = ['apple_pie', 'baby_back_ribs', 'baklava', 'beef_carpaccio', 'bee
                 'spring_rolls', 'steak', 'strawberry_shortcake', 'sushi', 'tacos', 'takoyaki', 'tiramisu', 
                 'tuna_tartare', 'waffles']
 
+@app.route('/login',methods=['POST'])
+def login():
+    print(request)
+    return jsonify({'log': 'LOGIN WORKING'}), 200
+
 @app.route('/predict', methods=['POST'])
 def predict():
-    print(request.files.keys())
-    
+    print("Predicting....")
+
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in the request'}), 400
     
@@ -58,4 +63,4 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host="192.168.0.122",port=5000, debug=True)
